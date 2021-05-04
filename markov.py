@@ -1,8 +1,6 @@
 """Generate Markov text from text files."""
 
 from random import choice
-import random
-choice()
 
 def open_and_read_file(file_path):
     """Take file path as string; return text as string.
@@ -44,15 +42,38 @@ def make_chains(text_string):
 
     chains = {}
 
-    words = text_string.split()
+    split_words = text_string.split()
     
-    #Loop through the words in words and assign as tuple in key
+    #Loop through the words in split_words and assign as tuple in key
     chains_key_holder = []
+    seuss_dictionary = {}
 
-    for i in range(len(words) - 1):
-        chains_key_holder.append(words[i], words[i + 1])
+    for i in range(len(split_words) - 1):
+        chains_key_holder.append((split_words[i], split_words[i + 1]))
+
+    # DID NOT WORK
+    # for future_key in range(len(chains_key_holder)-2):
+    #     if chains_key_holder[i] in split_words:
+    #         chains_key_holder[i]
+
         
-    .print(chains_key_holder)
+   #THIS IS OUR OFFICIAL CURRENT ATTEMPT
+    #loop through chains_key_holder.
+    #for each future_key in chains_key_holder, check if future key is already a key in our dictionary. If not, assign future_key as a key the dictionary, 
+    #then add (the following tuple's first index) as a value to future_key list.
+
+    for i in range(len(chains_key_holder)-2): 
+        
+        #check if chains_key_holder[i] is a key yet
+        #if not, create it as a key and add chains_key_holder[i+1][1] to the list of its values
+        #if it IS already a key, add chains_key_holder[i+1][1] as its value
+        #get() create chains_key_holder[i] as key
+        #add chains_key_holder[i+1][1] as a value to a dictionary with chains_key_holder[i] as key
+
+
+
+
+    print(chains_key_holder)
     return chains
 
 
