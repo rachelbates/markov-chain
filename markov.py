@@ -1,5 +1,4 @@
 """Generate Markov text from text files."""
-
 from random import choice
 
 def open_and_read_file(file_path):
@@ -14,6 +13,8 @@ def open_and_read_file(file_path):
 
     return contents
 
+chains_key_holder = []
+chains = {}
 
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
@@ -39,29 +40,19 @@ def make_chains(text_string):
         >>> chains[('there','juanita')]
         [None]
     """
-
-    
-
     split_words = text_string.split()
-    chains_key_holder = []
-    chains_value_holder = []
-    chains = {}
 
-    
     #Create dictionary keys and empty list value
     #Create holder for tuples of keys (for easier reference for now)
     for i in range(len(split_words)-1): 
         chains[(split_words[i], split_words[i + 1])] = []
         chains_key_holder.append((split_words[i], split_words[i + 1]))
     
-    #Loop though each word minus the last one
+    #Loop though each word in split_words minus the last word
     #if the word appears in the key holder at the value before it, add the corresponding tuple to the dictionary and add on the word 
     for i in range(len(split_words) - 2) :
         if split_words[i+1] in chains_key_holder[i][1] :
             chains[chains_key_holder[i]] += [(split_words[i + 2])]
-
-    #
-
 
     return chains
 
@@ -69,14 +60,27 @@ def make_chains(text_string):
 def make_text(chains):
     """Return text from chains."""
 
-    words = []
+    #Start with 2 words
+    #Make a loop, end when you reach a word that has none after it.
+    
+    #Add first 2 key words' to "words" list
+    #Begin loop until Key Value "I am?" is found empty
+        #Find the new last two words' corresponding key in dictionary "chain"
+        #Add this key's random value to "words" list
 
-    # your code goes here
+    words = []
+    words += chains_key_holder[0]
+    #Add the first key to the "words" list
+    
+    while True :
+        if chains[(words[-2], words[-1])]:
+            words.append(choice(chains[(words[-2], words[-1])]))
+        else:
+            break
 
     return ' '.join(words)
 
 
-input_path = 'green-eggs.txt'
 
 # Open the file and turn it into one long string
 input_text = open_and_read_file("green-eggs.txt")
