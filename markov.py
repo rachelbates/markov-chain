@@ -40,28 +40,29 @@ def make_chains(text_string):
         [None]
     """
 
-    chains = {}
+    
 
     split_words = text_string.split()
     chains_key_holder = []
-    seuss_dictionary = {}
+    chains_value_holder = []
+    chains = {}
 
-    for i in range(len(split_words) - 1):
+    
+    #Create dictionary keys and empty list value
+    #Create holder for tuples of keys (for easier reference for now)
+    for i in range(len(split_words)-1): 
+        chains[(split_words[i], split_words[i + 1])] = []
         chains_key_holder.append((split_words[i], split_words[i + 1]))
+    
+    #Loop though each word minus the last one
+    #if the word appears in the key holder at the value before it, add the corresponding tuple to the dictionary and add on the word 
+    for i in range(len(split_words) - 2) :
+        if split_words[i+1] in chains_key_holder[i][1] :
+            chains[chains_key_holder[i]] += [(split_words[i + 2])]
 
-        
-   #THIS IS OUR OFFICIAL CURRENT ATTEMPT
-    #loop through chains_key_holder.
-    #for each i in chains_key_holder, check if future key is already a key in our dictionary. If not, assign i as a key the dictionary, 
-    #then add (the following tuple's first index) as a value to i list.
-
-    for i in range(len(chains_key_holder)-2): 
-        seuss_dictionary[chains_key_holder[i]] = []
-        #print(seuss_dictionary.get(chains_key_holder[i], chains_key_holder[i]))
-#            the following tuple's furst index.append
+    #
 
 
-    print(seuss_dictionary)
     return chains
 
 
